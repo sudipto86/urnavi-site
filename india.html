@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Urnavi — India events & markets</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="India — curated events, markets and travel buying tips.">
+
+  <meta property="og:title" content="Urnavi — India events & markets">
+  <meta property="og:description" content="Fairs, bazaars, crafts and cultural festivals.">
+  <meta property="og:url" content="https://urnavi.com/india.html">
+  <meta property="og:image" content="https://urnavi.com/assets/india-bazaar.jpg">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="icon" href="assets/logo.svg">
+</head>
+
+<body>
+  <a href="#main" class="skip-link" style="position:absolute;left:-9999px;overflow:hidden;">Skip</a>
+
+  <header class="urnavi-header">
+    <div class="urnavi-header-inner">
+      <a href="index.html" class="urnavi-logo">
+        <img src="assets/logo.svg" alt="Urnavi logo">
+      </a>
+      <div class="urnavi-tagline">Navigate the world’s events & markets.</div>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <a href="index.html" style="text-decoration:none;color:var(--muted)">&larr; Back</a>
+
+    <header style="margin:14px 0 18px">
+      <h1>India</h1>
+      <p style="color:var(--muted)">India’s bazaars are a tapestry of colour & craft.</p>
+    </header>
+
+    <!-- Dynamic events -->
+    <div id="events-root" data-country="india">Loading...</div>
+
+    <section class="section" style="margin-top:18px">
+      <h2>Markets</h2>
+
+      <div class="grid">
+
+        <article class="card">
+          <div class="media" style="background-image:url('assets/dilli-haat.jpg')"></div>
+          <div class="body">
+            <h3>Dilli Haat — New Delhi</h3>
+            <p>Craft stalls & state food kiosks.</p>
+            <div class="meta">
+              <span style="color:var(--muted)">Curated</span>
+              <a class="btn" href="https://delhitourism.gov.in" target="_blank" rel="noopener noreferrer">Visit</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="media" style="background-image:url('assets/chandni-chowk.jpg')"></div>
+          <div class="body">
+            <h3>Chandni Chowk</h3>
+            <p>Historic streets for spices, fabrics & food.</p>
+            <div class="meta">
+              <span style="color:var(--muted)">Historic</span>
+              <a class="btn" href="https://delhitourism.gov.in" target="_blank" rel="noopener noreferrer">Guide</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="media" style="background-image:url('assets/johari-bazaar.jpg')"></div>
+          <div class="body">
+            <h3>Johari Bazaar — Jaipur</h3>
+            <p>Famous for gemstones & jewellery.</p>
+            <div class="meta">
+              <span style="color:var(--muted)">Gems</span>
+              <a class="btn" href="https://jaipur.org" target="_blank" rel="noopener noreferrer">Tips</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      © Urnavi — India page
+    </footer>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
