@@ -18,22 +18,59 @@ if (!EB_TOKEN) {
 
 // Fetch events from Eventbrite API
 async function fetchEventbriteEvents(query) {
-  const url = `https://www.eventbriteapi.com/v3/events/search/?location.address=${encodeURIComponent(query)}&expand=venue,category`;
+// Replace your existing fetchEventbriteEvents with this function
+async function fetchEventbriteEvents(query) {
+  const base = 'https://www.eventbriteapi.com/v3/events/search/';
+  // Try primary URL with location.address and expand
+  const url1 = `${base}?location.address=${encodeURIComponent(query)}&expand=venue,category`;
+  // Fallback url with q parameter
+  const url2 = `${base}?q=${encodeURIComponent(query)}&expand=venue,category`;
 
-  console.log("Fetching:", url);
+  async function doRequest(url) {
+    console.log("Fetching:", url);
+    const res = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${EB_TOKEN}`,
+        "Accept": "application/json"
+      }
+    });
 
-  const res = await fetch(url, {
-    headers: {
-      "Authorization": `Bearer ${EB_TOKEN}`
+    const text = await res.text(); // read raw body for debugging
+    let body;
+    try { body = JSON.parse(text); } catch(e) { body = text; }
+
+    if (!res.ok) {
+      // show full debug info in logs
+      console.error(`Eventbrite request failed: ${res.status} ${res.statusText}`);
+      console.error("Response body:", body);
+      const err = new Error(`Eventbrite API failed: ${res.status} ${res.statusText}`);
+      err.status = res.status;
+      err.body = body;
+      throw err;
     }
-  });
 
-  if (!res.ok) {
-    throw new Error(`Eventbrite API failed: ${res.status} ${res.statusText}`);
+    // success
+    return body.events || body; // body.events is the usual list
   }
 
-  const data = await res.json();
-  return data.events || [];
+  // Try first URL; if it 404s, try fallback
+  try {
+    return await doRequest(url1);
+  } catch (err) {
+    if (err.status === 404) {
+      console.warn("First URL returned 404; trying fallback query (q=).");
+      try {
+        return await doRequest(url2);
+      } catch (err2) {
+        // rethrow so action logs show both attempts
+        throw err2;
+      }
+    }
+    // rethrow for other statuses (401, 403, etc.)
+    throw err;
+  }
+}
+
 }
 
 // Normalize Eventbrite event data to your site structure
