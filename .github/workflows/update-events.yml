@@ -1,4 +1,44 @@
-- name: Run data updater
-  env:
-    EVENTBRITE_TOKEN: ${{ secrets.EVENTBRITE_TOKEN }}
-  run: npm run update-data
+name: Update event JSON data
+
+on:
+  workflow_dispatch:   # manual trigger from GitHub UI
+  schedule:
+    # Run every 6 hours (adjust as needed). Times are UTC.
+    - cron: '0 */6 * * *'
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install deps (if any)
+        run: npm ci
+        # If you have no package-lock.json, 'npm ci' will error. If so, replace with 'npm install' or skip.
+
+      - name: Run data updater
+        env:
+        EVENTBRITE_TOKEN: ${{ secrets.EVENTBRITE_TOKEN }}
+        run: npm run update-data
+
+      - name: Commit updated data files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): update event JSON files [skip ci]"
+          file_pattern: "data/*.json"
+          branch: "main"
+          commit_username: "urnavi-bot"
+          commit_email: "urnavi-bot@example.com"
+          # Use a token with write rights (GITHUB_TOKEN is available by default)
+        env:
+          GIT_AUTHOR_NAME: "urnavi-bot"
+          GIT_AUTHOR_EMAIL: "urnavi-bot@example.com"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
