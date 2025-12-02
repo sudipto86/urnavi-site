@@ -17,7 +17,7 @@ if (!EB_TOKEN) {
 }
 
 // Fetch events from Eventbrite API
-async function fetchEventbriteEvents(query) {
+//async function fetchEventbriteEvents(query) {
 // Replace your existing fetchEventbriteEvents with this function
 async function fetchEventbriteEvents(query) {
   const base = 'https://www.eventbriteapi.com/v3/events/search/';
@@ -71,7 +71,7 @@ async function fetchEventbriteEvents(query) {
   }
 }
 
-}
+//}
 
 // Normalize Eventbrite event data to your site structure
 function normalizeEvents(events) {
