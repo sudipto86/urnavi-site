@@ -1,0 +1,4 @@
+- name: Run data updater
+  env:
+    EVENTBRITE_TOKEN: ${{ secrets.EVENTBRITE_TOKEN }}
+  run: npm run update-data
