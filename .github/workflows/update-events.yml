@@ -23,6 +23,26 @@ jobs:
       - name: Install dependencies
         # If you have no package.json, this will be harmless (no-op).
         run: npm install
+        
+      - name: Check Eventbrite token (temporary)
+        env:
+          EVENTBRITE_TOKEN: ${{ secrets.EVENTBRITE_TOKEN }}
+        run: |
+            echo "=== Eventbrite token check: /users/me/ ==="
+            # Make the request and capture status & body
+            RESP_FILE=$(mktemp)
+            HTTP_STATUS=$(curl -s -o "$RESP_FILE" -w "%{http_code}" \
+              -H "Authorization: Bearer $EVENTBRITE_TOKEN" \
+              "https://www.eventbriteapi.com/v3/users/me/")
+            echo "HTTP status: $HTTP_STATUS"
+            echo "Response body:"
+            cat "$RESP_FILE"
+            echo "=== end response ==="
+            # Exit non-zero if not 200 so the Action fails and you can see logs clearly.
+            if [ "$HTTP_STATUS" -ne 200 ]; then
+              echo "EVENTBRITE token check failed with status $HTTP_STATUS"
+              exit 1
+            fi
 
       - name: Run data updater
         env:
