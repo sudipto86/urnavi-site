@@ -9,28 +9,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Node (use Node 22)
+      - name: Set up Node (22)
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
 
       - name: Install dependencies
-        working-directory: client
         run: npm ci
 
       - name: Build project
-        working-directory: client
         run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Publish to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: client/dist
+          publish_dir: dist
           publish_branch: gh-pages
