@@ -4,44 +4,19 @@ import MapView from "./components/MapView";
 import Logo from "./components/Logo";
 import events from "./data/events.json";
 import "./styles/global.css";
-import "./styles/filterbar.css";
 
 export default function App() {
   // canonical filters (applied to MapView)
   const [filters, setFilters] = useState({
-    category: "all",
-    country: "all",
-    dateFrom: "",
-    dateTo: ""
+    category: "all",     // "What"
+    country: "all",      // "Where"
+    dateFrom: ""         // "When" (YYYY-MM-DD, month-start) or "" = all
   });
-
-  // local header inputs (edit freely; user must press Show to apply)
-  const [local, setLocal] = useState(filters);
 
   // reset token to tell MapView to refit world bounds on Clear
   const [resetToken, setResetToken] = useState(0);
 
-  useEffect(() => {
-    // keep local in sync when filters externally change
-    setLocal(filters);
-  }, [filters]);
-
-  function updateLocal(changes) {
-    setLocal({ ...local, ...changes });
-  }
-
-  function applyFilters() {
-    setFilters(local);
-  }
-
-  function clearFilters() {
-    const defaults = { category: "all", country: "all", dateFrom: "", dateTo: "" };
-    setLocal(defaults);
-    setFilters(defaults);
-    setResetToken(t => t + 1);
-  }
-
-  // derive category and country lists from events.json (dedupe + sort)
+  // derive Type (category) & Country lists from events.json
   const categoryOptions = useMemo(() => {
     const s = new Set(events.map(e => (e.category || "uncategorized").trim()));
     return ["all", ...Array.from(s).filter(Boolean).sort()];
@@ -51,6 +26,42 @@ export default function App() {
     const s = new Set(events.map(e => (e.country || "Unknown").trim()));
     return ["all", ...Array.from(s).filter(Boolean).sort()];
   }, []);
+
+  // Build 'When' options - month list for next 3 months (including current month)
+  const monthOptions = useMemo(() => {
+    const months = ["all"];
+    const now = new Date();
+    for (let i = 0; i < 12; i++) {
+      const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+      const iso = d.toISOString().slice(0,7); // "YYYY-MM"
+      const label = d.toLocaleString(undefined, { month: "short", year: "numeric" }); // "Dec 2025"
+      months.push({ value: `${iso}-01`, label });
+    }
+    return months; // first "all", then objects
+  }, []);
+
+  // Handlers: immediate apply on change
+  function onWhereChange(value) {
+    // apply country immediately
+    setFilters(f => ({ ...f, country: value }));
+    // no need to change resetToken — clearing will do that.
+  }
+
+  function onWhatChange(value) {
+    setFilters(f => ({ ...f, category: value }));
+  }
+
+  function onWhenChange(monthValue) {
+    // monthValue is either ""/"all" or "YYYY-MM-01"
+    setFilters(f => ({ ...f, dateFrom: monthValue || "" }));
+  }
+
+  function clearFilters() {
+    const defaults = { category: "all", country: "all", dateFrom: "" };
+    setFilters(defaults);
+    // signal map to reset view
+    setResetToken(t => t + 1);
+  }
 
   return (
     <div className="App">
@@ -64,40 +75,56 @@ export default function App() {
         </div>
 
         <div className="top-search" role="search" aria-label="Explore events">
+
+          {/* WHERE */}
           <div className="search-field">
-            <label className="visually-hidden" htmlFor="cat-select">Type</label>
+            <label className="search-label">Where</label>
             <select
-              id="cat-select"
-              value={local.category}
-              onChange={e => updateLocal({ category: e.target.value })}
+              aria-label="Where — Countries"
+              value={filters.country}
+              onChange={e => onWhereChange(e.target.value)}
             >
-              {categoryOptions.map(c => <option key={c} value={c === "all" ? "all" : c}>{c === "all" ? "All types" : c}</option>)}
+              {countryOptions.map(c => (
+                <option key={c} value={c === "all" ? "all" : c}>
+                  {c === "all" ? "All countries" : c}
+                </option>
+              ))}
             </select>
           </div>
 
+          {/* WHAT */}
           <div className="search-field">
-            <label className="visually-hidden" htmlFor="country-select">Country</label>
+            <label className="search-label">What</label>
             <select
-              id="country-select"
-              value={local.country}
-              onChange={e => updateLocal({ country: e.target.value })}
+              aria-label="What — Type"
+              value={filters.category}
+              onChange={e => onWhatChange(e.target.value)}
             >
-              {countryOptions.map(c => <option key={c} value={c === "all" ? "all" : c}>{c === "all" ? "All countries" : c}</option>)}
+              {categoryOptions.map(c => (
+                <option key={c} value={c === "all" ? "all" : c}>
+                  {c === "all" ? "All types" : c}
+                </option>
+              ))}
             </select>
           </div>
 
+          {/* WHEN (months) */}
           <div className="search-field">
-            <label className="visually-hidden" htmlFor="month-input">Month</label>
-            <input
-              id="month-input"
-              type="month"
-              value={local.dateFrom ? local.dateFrom.slice(0,7) : ""}
-              onChange={e => updateLocal({ dateFrom: e.target.value ? `${e.target.value}-01` : "" })}
-            />
+            <label className="search-label">When</label>
+            <select
+              aria-label="When — Month"
+              value={filters.dateFrom ? filters.dateFrom : "all"}
+              onChange={e => onWhenChange(e.target.value === "all" ? "" : e.target.value)}
+            >
+              {monthOptions.map(opt => {
+                if (opt === "all") return <option key="all" value="all">All months</option>;
+                return <option key={opt.value} value={opt.value}>{opt.label}</option>;
+              })}
+            </select>
           </div>
 
+          {/* Clear */}
           <div className="search-actions">
-            <button className="show-btn" onClick={applyFilters}>Show</button>
             <button className="clear-btn" onClick={clearFilters}>Clear</button>
           </div>
         </div>

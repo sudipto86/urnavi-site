@@ -125,3 +125,28 @@
   .top-search { flex-wrap:wrap; gap:6px; padding:8px; }
   .search-actions { width:100%; justify-content:flex-end; }
 }
+
+.top-search .search-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.top-search .search-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 140px;
+}
+
+/* tighten Clear button look to match header */
+.search-actions .clear-btn {
+  background: transparent;
+  border: 1px solid #e6eefc;
+  padding: 8px 10px;
+  border-radius: 9px;
+  cursor: pointer;
+}
