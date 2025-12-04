@@ -1,9 +1,0 @@
-{
-  "name": "urnavi-data-updater",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "update-data": "node scripts/fetch-events.js",
-    "dev": "(cd client && npm run dev)"
-  }
-}
