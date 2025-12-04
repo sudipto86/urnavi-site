@@ -1,7 +1,16 @@
+/* map.css - ensure default Leaflet look and responsive background */
 .leaflet-container {
-    background: #eef6ff;
+  background: #eef6ff;
 }
 
 .leaflet-popup-content-wrapper {
     border-radius: 8px;
+}
+
+/* remove any leftover custom count marker styling */
+.custom-count-icon,
+.count-marker,
+.count-marker .count,
+.count-marker .cm-label {
+  display: none !important;
 }
