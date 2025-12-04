@@ -1,0 +1,26 @@
+[
+    {
+        "id": "evt-1",
+        "title": "Sunday Market — Central Square",
+        "lat": 59.3293,
+        "lng": 18.0686,
+        "date": "2026-06-14",
+        "category": "market"
+    },
+    {
+        "id": "evt-2",
+        "title": "Jazz Night — Old Pier",
+        "lat": 59.3326,
+        "lng": 18.0649,
+        "date": "2026-06-15",
+        "category": "music"
+    },
+    {
+        "id": "evt-3",
+        "title": "Street Food Fest",
+        "lat": 59.3250,
+        "lng": 18.0700,
+        "date": "2026-06-20",
+        "category": "food"
+    }
+]
