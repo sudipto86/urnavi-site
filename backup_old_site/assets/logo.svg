@@ -1,9 +1,0 @@
-<svg width="150" height="38" viewBox="0 0 300 80" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    .text { font-family: 'Inter', sans-serif; font-weight: 700; fill: #2b7a78; }
-    .dot  { fill: #f08a5d; }
-  </style>
-
-  <text x="0" y="55" font-size="48" class="text">Urnavi</text>
-  <circle cx="260" cy="38" r="8" class="dot"/>
-</svg>
