@@ -1,8 +1,8 @@
 .leaflet-container {
-    background: #f0f0f0;
+    background: #f4f6fb;
 }
 
-/* prettier popups */
+/* nicer popups */
 .leaflet-popup-content-wrapper {
     border-radius: 8px;
 }

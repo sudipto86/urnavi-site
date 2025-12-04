@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -13,12 +13,27 @@ L.Icon.Default.mergeOptions({
     shadowUrl: new URL("leaflet/dist/images/marker-shadow.png", import.meta.url).href
 });
 
-// small helper to pan/fly when clicking list items (if later)
+// Programmatic zoom control positioned bottomright
+function ZoomControlBottomRight() {
+    const map = useMap();
+    useEffect(() => {
+        const ctrl = L.control.zoom({ position: "bottomright" });
+        ctrl.addTo(map);
+        return () => {
+            ctrl.remove();
+        };
+    }, [map]);
+    return null;
+}
+
+// Fly helper
 function FlyToMarker({ coords }) {
     const map = useMap();
-    if (coords) {
-        map.flyTo(coords, 14, { duration: 0.6 });
-    }
+    useEffect(() => {
+        if (coords) {
+            map.flyTo(coords, 12, { duration: 0.6 });
+        }
+    }, [coords, map]);
     return null;
 }
 
@@ -42,13 +57,26 @@ export default function MapView({ filters }) {
         });
     }, [filters]);
 
+    // determine pan target when visible changes
+    const first = visible[0];
+
+    // sensible default center: if visible exists fly to first; otherwise show world-ish view
+    const defaultCenter = first ? [first.lat, first.lng] : [20.0, 10.0];
+
     return (
         <div className="map-wrap">
-            <MapContainer center={[59.3293, 18.0686]} zoom={13} style={{ height: "100vh", width: "100%" }}>
+            <MapContainer
+                center={defaultCenter}
+                zoom={first ? 10 : 2}
+                style={{ height: "100vh", width: "100%" }}
+                scrollWheelZoom={true}
+            >
                 <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+
+                <ZoomControlBottomRight />
 
                 {visible.map(ev => (
                     <Marker key={ev.id} position={[ev.lat, ev.lng]} eventHandlers={{
@@ -59,19 +87,17 @@ export default function MapView({ filters }) {
                                 <strong>{ev.title}</strong>
                                 <div style={{ fontSize: 13, color: "#555" }}>{ev.date} • {ev.country}</div>
                                 <div style={{ marginTop: 8 }}>{ev.description || ""}</div>
-                                <div style={{ marginTop: 8 }}>
-                                    <a href="#" onClick={e => e.preventDefault()}>View details</a>
-                                </div>
                             </div>
                         </Popup>
                     </Marker>
                 ))}
-                <FlyToMarker coords={selectedCoords} />
+
+                <FlyToMarker coords={selectedCoords || (first ? [first.lat, first.lng] : null)} />
             </MapContainer>
 
             {visible.length === 0 && (
                 <div className="no-results">
-                    No matching events. Try clearing filters.
+                    No matching events. Try changing filters.
                 </div>
             )}
         </div>
