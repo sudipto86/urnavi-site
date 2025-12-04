@@ -3,26 +3,80 @@ body,
 #root {
     height: 100%;
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-family: Inter, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-.topbar {
+.App main {
+    height: 100vh;
+}
+
+/* top header */
+.app-header {
     position: absolute;
-    z-index: 1200;
-    left: 12px;
+    z-index: 1600;
     top: 12px;
-    background: rgba(255, 255, 255, 0.95);
+    left: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: calc(100% - 24px);
+    max-width: 1100px;
+    pointer-events: none;
+    /* allow clicks fall-through except buttons which re-enable */
+}
+
+.app-header .left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.brand-block {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.wordmark {
+    font-weight: 800;
+    font-size: 18px;
+    color: #0b1220;
+}
+
+.sub {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.app-header .right {
+    margin-left: auto;
+    pointer-events: auto;
+}
+
+/* filter toggle button */
+.filter-toggle {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: white;
+    border: 0;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
+}
+
+/* small general helpers */
+.no-results {
+    position: absolute;
+    z-index: 1500;
+    left: 50%;
+    top: 12%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.96);
     padding: 8px 12px;
     border-radius: 8px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
-
-.brand h1 {
-    margin: 0;
-    font-size: 16px;
-}
-
-.brand .tag {
-    font-size: 12px;
-    color: #666;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
