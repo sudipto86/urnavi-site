@@ -1,0 +1,62 @@
+[
+  {
+    "id": "evt-1",
+    "title": "Sunday Market — Central Square",
+    "lat": 59.3293,
+    "lng": 18.0686,
+    "date": "2026-06-14",
+    "category": "market",
+    "country": "Sweden",
+    "description": "Local vendors selling crafts and food."
+  },
+  {
+    "id": "evt-2",
+    "title": "Jazz Night — Old Pier",
+    "lat": 59.3326,
+    "lng": 18.0649,
+    "date": "2026-06-15",
+    "category": "music",
+    "country": "Sweden",
+    "description": "Live jazz by the harbor."
+  },
+  {
+    "id": "evt-3",
+    "title": "Street Food Fest",
+    "lat": 59.3250,
+    "lng": 18.0700,
+    "date": "2026-06-20",
+    "category": "food",
+    "country": "Sweden",
+    "description": "Taste dishes from around the world."
+  },
+  {
+    "id": "evt-4",
+    "title": "Handicraft Market",
+    "lat": 12.9716,
+    "lng": 77.5946,
+    "date": "2026-08-08",
+    "category": "market",
+    "country": "India",
+    "description": "Artisans from several regions."
+  },
+  {
+    "id": "evt-5",
+    "title": "Bollywood Night",
+    "lat": 12.9611,
+    "lng": 77.6387,
+    "date": "2026-08-10",
+    "category": "music",
+    "country": "India",
+    "description": "Bollywood hits live."
+  },
+  {
+    "id": "evt-6",
+    "title": "Open-air Food Market",
+    "lat": 28.6139,
+    "lng": 77.2090,
+    "date": "2026-09-01",
+    "category": "food",
+    "country": "India",
+    "description": "Street food and pop-ups."
+  }
+]

@@ -1,0 +1,57 @@
+.filter-panel {
+    position: absolute;
+    z-index: 1350;
+    /* below header, above map */
+    left: 12px;
+    top: 110px;
+    /* moved down so zoom controls are visible */
+    width: 240px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    backdrop-filter: blur(4px);
+}
+
+.filter-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.filter-row label {
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.filter-row select,
+.filter-row input[type="date"] {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background: #fff;
+    width: 100%;
+}
+
+
+.note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
+}
+
+.no-results {
+    position: absolute;
+    z-index: 1300;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    font-size: 14px;
+}
