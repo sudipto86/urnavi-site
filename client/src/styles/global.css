@@ -3,83 +3,61 @@ body,
 #root {
     height: 100%;
     margin: 0;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: Inter, -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
 .App main {
     height: 100vh;
 }
 
-/* Navbar */
-.navbar {
+/* top header */
+.app-header {
     position: absolute;
-    z-index: 1400;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: 1600;
     top: 12px;
+    left: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 32px);
-    max-width: 980px;
-    padding: 8px 12px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.96);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(6px);
+    gap: 12px;
+    width: calc(100% - 24px);
+    max-width: 1100px;
+    pointer-events: none;
+    /* allow clicks fall-through except buttons which re-enable */
 }
 
-.navbar-left {
+.app-header .left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    pointer-events: auto;
 }
 
-.logo {
+.brand-block {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+}
+
+.wordmark {
     font-weight: 800;
     font-size: 18px;
-    color: #1f2937;
-    letter-spacing: 0.6px;
+    color: #0b1220;
 }
 
-.slogan {
-    font-size: 13px;
+.sub {
+    font-size: 12px;
     color: #6b7280;
-    opacity: 0.95;
+    margin-top: 2px;
 }
 
-/* nav actions on the right */
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.app-header .right {
+    margin-left: auto;
+    pointer-events: auto;
 }
 
-/* small toggle buttons */
-.toggle-btn {
-    border: 0;
-    background: transparent;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-weight: 600;
-    color: #374151;
-    cursor: pointer;
-    transition: background 160ms ease, color 160ms ease;
-}
-
-.toggle-btn:hover {
-    background: rgba(0, 0, 0, 0.04);
-}
-
-.toggle-btn.active {
-    background: #111827;
-    color: #fff;
-}
-
-/* filter open button */
-.filter-open-btn {
+/* filter toggle button */
+.filter-toggle {
     background: linear-gradient(135deg, #60a5fa, #3b82f6);
     color: white;
     border: 0;
@@ -87,5 +65,18 @@ body,
     border-radius: 10px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(59, 130, 246, 0.28);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.18);
+}
+
+/* small general helpers */
+.no-results {
+    position: absolute;
+    z-index: 1500;
+    left: 50%;
+    top: 12%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.96);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import MapView from "./components/MapView";
 import FilterPanel from "./components/FilterPanel";
+import Logo from "./components/Logo";
 import "./styles/global.css";
-import "./styles/drawer.css";
+import "./styles/filterbar.css";
 
 export default function App() {
   const [filters, setFilters] = useState({
@@ -12,49 +13,35 @@ export default function App() {
     dateTo: ""
   });
 
-  const [showFilters, setShowFilters] = useState(false);
-  const [viewMode, setViewMode] = useState("map"); // map | list (placeholder)
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   return (
     <div className="App">
-      <nav className="navbar">
-        <div className="navbar-left">
-          <div className="logo">UrNavi</div>
-          <div className="slogan">Calmly find what’s happening nearby</div>
+      <header className="app-header">
+        <div className="left">
+          <Logo size={36} />
+          <div className="brand-block">
+            <div className="wordmark">UrNavi</div>
+            <div className="sub">Calmly find what’s happening nearby</div>
+          </div>
         </div>
 
-        <div className="nav-actions">
+        <div className="right">
           <button
-            className={`toggle-btn ${viewMode === "map" ? "active" : ""}`}
-            onClick={() => setViewMode("map")}
-            aria-pressed={viewMode === "map"}
-            title="Map view"
+            className="filter-toggle"
+            onClick={() => setFiltersOpen((s) => !s)}
+            aria-expanded={filtersOpen}
+            aria-controls="filter-bar"
           >
-            Map
-          </button>
-
-          <button
-            className={`toggle-btn ${viewMode === "list" ? "active" : ""}`}
-            onClick={() => setViewMode("list")}
-            aria-pressed={viewMode === "list"}
-            title="List view"
-          >
-            List
-          </button>
-
-          <button
-            className="filter-open-btn"
-            onClick={() => setShowFilters(true)}
-            title="Open filters"
-          >
-            Filters
+            {filtersOpen ? "Close Filters" : "Filters"}
           </button>
         </div>
-      </nav>
+      </header>
 
       <FilterPanel
-        open={showFilters}
-        onClose={() => setShowFilters(false)}
+        id="filter-bar"
+        open={filtersOpen}
+        onClose={() => setFiltersOpen(false)}
         filters={filters}
         onChange={setFilters}
       />
