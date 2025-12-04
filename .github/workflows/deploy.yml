@@ -10,18 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Node
-        uses: actions/setup-node@v3
+      - name: Set up Node (use Node 22)
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '22'
+          cache: 'npm'
 
       - name: Install dependencies
         working-directory: client
-        run: npm install
+        run: npm ci
 
       - name: Build project
         working-directory: client
