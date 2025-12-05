@@ -1,152 +1,207 @@
-/* header zones */
+/* ---------------------------------------------------------
+   GLOBAL RESET + BASE
+--------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+               Helvetica, Arial, sans-serif;
+  background: #f9fafb;
+  color: #0b1220;
+}
+
+#root,
+.App {
+  width: 100%;
+  height: 100%;
+}
+
+/* ---------------------------------------------------------
+   HEADER LAYOUT
+--------------------------------------------------------- */
+
 .app-header {
   position: absolute;
   z-index: 1600;
   top: 12px;
   left: 12px;
   right: 12px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  max-width: 1200px;
+
+  max-width: 1400px;
   margin: 0 auto;
-  pointer-events: none;
+
+  pointer-events: none; /* lets user drag map behind header */
 }
 
-.app-header .left { display:flex; align-items:center; gap:10px; pointer-events:auto; }
-.brand-block { display:flex; flex-direction:column; line-height:1; }
-.wordmark { font-weight:800; font-size:18px; color:#0b1220; }
-.sub { font-size:12px; color:#6b7280; margin-top:2px; }
-
-.center-banner { pointer-events:auto; display:flex; align-items:center; justify-content:center; gap:12px; }
-.top-links a { color:#374151; margin:0 8px; text-decoration:none; font-weight:600; font-size:13px; }
-
-.app-header .right { pointer-events:auto; }
-
-/* Explore button */
-.explore-btn {
-  background: linear-gradient(135deg,#60a5fa,#3b82f6);
-  color:white;
-  border:0;
-  padding:8px 14px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-  box-shadow:0 8px 24px rgba(59,130,246,0.18);
+.app-header * {
+  pointer-events: auto; /* re-enable pointer events inside */
 }
 
-/* small close button in filter bar actions */
-.close-small {
-  background: transparent;
-  border: 0;
-  font-size: 18px;
-  margin-left: 8px;
-  cursor: pointer;
+.header-compact .left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* small utility for accessibility */
-.visually-hidden {
-  position: absolute !important;
-  height: 1px; width: 1px;
-  overflow: hidden; clip: rect(1px,1px,1px,1px);
-  white-space: nowrap;
+.wordmark {
+  font-weight: 800;
+  font-size: 20px;
+  color: #061124;
 }
 
-/* header-clean layout: logo left, inline search center, three-dash right */
-.header-clean .app-header {
-  pointer-events: none;
+.sub {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: -2px;
 }
 
-/* left (logo + wordmark) */
-.header-clean .left { pointer-events: auto; display:flex; gap:10px; align-items:center; }
-.header-clean .wordmark { font-weight:800; font-size:18px; color:#061124; letter-spacing:0.6px; }
-.header-clean .sub { font-size:12px; color:#6b7280; margin-top:2px; }
+/* ---------------------------------------------------------
+   TOP SEARCH BAR (compact Where / What / When)
+--------------------------------------------------------- */
 
-/* center inline search area */
-.top-search {
-  pointer-events: auto;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background: rgba(255,255,255,0.86);
-  padding: 8px 12px;
-  border-radius: 12px;
-  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+.top-search.compact {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  background: rgba(255, 255, 255, 0.92);
+  padding: 6px 8px;
+  border-radius: 10px;
+
+  box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
   backdrop-filter: blur(4px);
 }
 
-/* fields */
-.search-field select,
-.search-field input[type="month"] {
-  padding:8px 10px;
-  border-radius:8px;
-  border:1px solid #e6eefc;
-  background:white;
-  font-size:13px;
-}
-
-/* actions */
-.search-actions { display:flex; gap:8px; align-items:center; }
-.show-btn {
-  background: linear-gradient(135deg,#60a5fa,#3b82f6);
-  color:white; border:0; padding:8px 12px; border-radius:9px; font-weight:700; cursor:pointer;
-}
-.clear-btn {
-  background:transparent; border:1px solid #e6eefc; padding:8px 10px; border-radius:9px; cursor:pointer;
-}
-
-/* right three-dash menu */
-.three-dash { position:relative; pointer-events:auto; }
-.dash-btn { background:transparent; border:0; font-size:20px; cursor:pointer; padding:8px; border-radius:8px; }
-.dash-menu {
-  position:absolute;
-  right:0;
-  top:calc(100% + 8px);
-  display:none;
-  background:white;
-  border-radius:8px;
-  box-shadow:0 8px 24px rgba(2,6,23,0.12);
-  padding:8px;
-  min-width:140px;
-  z-index:1900;
-}
-.dash-menu a { display:block; padding:8px 10px; color:#111827; text-decoration:none; font-weight:600; }
-.three-dash:hover .dash-menu,
-.three-dash:focus-within .dash-menu { display:block; }
-
-/* responsive tweaks */
-@media (max-width: 920px) {
-  .top-search { gap:8px; padding:6px; font-size:13px; }
-  .search-field { min-width: 90px; }
-}
-@media (max-width: 620px) {
-  /* stack header controls on small screens */
-  .top-search { flex-wrap:wrap; gap:6px; padding:8px; }
-  .search-actions { width:100%; justify-content:flex-end; }
-}
-
-.top-search .search-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: #374151;
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-}
-
-.top-search .search-field {
-  display: flex;
-  flex-direction: column;
-  min-width: 140px;
-}
-
-/* tighten Clear button look to match header */
-.search-actions .clear-btn {
-  background: transparent;
-  border: 1px solid #e6eefc;
+.compact-field select {
   padding: 8px 10px;
-  border-radius: 9px;
+  border-radius: 8px;
+  border: 1px solid #e6eefc;
+  background: white;
+  min-width: 120px;
+  font-weight: 600;
+  color: #0b1220;
   cursor: pointer;
+}
+
+/* Placeholder-style disabled option */
+.compact-field select option[disabled] {
+  color: #6b7280;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   CLEAR BUTTON
+--------------------------------------------------------- */
+
+.compact-actions .compact-clear {
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #e6eefc;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.compact-clear:hover {
+  background: #f3f4f6;
+}
+
+/* ---------------------------------------------------------
+   THREE-DASH MENU
+--------------------------------------------------------- */
+
+.three-dash {
+  position: relative;
+}
+
+.dash-btn {
+  font-size: 20px;
+  background: white;
+  border: 1px solid #e6eefc;
+  border-radius: 8px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.dash-menu {
+  display: none;
+  position: absolute;
+  top: 42px;
+  right: 0;
+
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
+  min-width: 140px;
+  padding: 8px 0;
+  z-index: 2000;
+}
+
+.three-dash:hover .dash-menu {
+  display: block;
+}
+
+.dash-menu a {
+  display: block;
+  padding: 8px 14px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #0b1220;
+}
+
+.dash-menu a:hover {
+  background: #f3f4f6;
+}
+
+/* ---------------------------------------------------------
+   MAP WRAPPER (basic)
+--------------------------------------------------------- */
+
+.map-wrap {
+  width: 100%;
+  height: 100%;
+}
+
+.no-results {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.92);
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #374151;
+  box-shadow: 0 6px 30px rgba(2, 6, 23, 0.1);
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE SMALL SCREENS
+--------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .top-search.compact {
+    gap: 6px;
+    padding: 4px 6px;
+  }
+
+  .compact-field select {
+    min-width: 100px;
+  }
+
+  .wordmark {
+    font-size: 17px;
+  }
 }
