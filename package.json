@@ -4,7 +4,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "update-data": "node scripts/fetch-events.js",
+    "update-data-disabled": "node scripts/fetch-events.js",
     "build": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
+    "dotenv": "^17.2.3",
+    "node-fetch": "^3.3.2",
+    "p-limit": "^7.2.0",
+    "rss-parser": "^3.13.0"
   }
 }

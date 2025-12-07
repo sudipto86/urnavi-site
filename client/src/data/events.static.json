@@ -1,0 +1,68 @@
+[
+  {
+    "id": "se-stockholm-gamla-stan-walk",
+    "title": "Evening Walk in Gamla Stan",
+    "start": "2025-12-20T18:00:00+01:00",
+    "category": "Guided tour",
+    "country": "Sweden",
+    "city": "Stockholm",
+    "lat": 59.325,
+    "lng": 18.071,
+    "url": "https://www.visitstockholm.com/events/"
+  },
+  {
+    "id": "se-stockholm-jazz-brunch",
+    "title": "Jazz & Brunch by the Waterfront",
+    "start": "2025-12-21T11:30:00+01:00",
+    "category": "Music",
+    "country": "Sweden",
+    "city": "Stockholm",
+    "lat": 59.332,
+    "lng": 18.08,
+    "url": "https://www.visitstockholm.com/events/"
+  },
+  {
+    "id": "se-stockholm-exhibition-museum",
+    "title": "Contemporary Art at City Museum",
+    "start": "2025-12-22T10:00:00+01:00",
+    "category": "Exhibition",
+    "country": "Sweden",
+    "city": "Stockholm",
+    "lat": 59.33,
+    "lng": 18.06,
+    "url": "https://www.visitstockholm.com/events/"
+  },
+  {
+    "id": "no-oslo-opera-night",
+    "title": "Opera Night by the Fjord",
+    "start": "2025-12-23T19:30:00+01:00",
+    "category": "Stage & Film",
+    "country": "Norway",
+    "city": "Oslo",
+    "lat": 59.907,
+    "lng": 10.753,
+    "url": "https://www.visitoslo.com/en/whats-on/events/"
+  },
+  {
+    "id": "no-oslo-winter-festival",
+    "title": "Oslo Winter Lights Festival",
+    "start": "2025-12-28T17:00:00+01:00",
+    "category": "Festival",
+    "country": "Norway",
+    "city": "Oslo",
+    "lat": 59.915,
+    "lng": 10.74,
+    "url": "https://www.visitoslo.com/en/whats-on/events/"
+  },
+  {
+    "id": "no-oslo-museum-day",
+    "title": "Sunday at the National Museum",
+    "start": "2025-12-21T11:00:00+01:00",
+    "category": "Exhibition",
+    "country": "Norway",
+    "city": "Oslo",
+    "lat": 59.91,
+    "lng": 10.73,
+    "url": "https://www.visitoslo.com/en/whats-on/events/"
+  }
+]

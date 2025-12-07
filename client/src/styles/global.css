@@ -1,19 +1,17 @@
-/* ---------------------------------------------------------
-   GLOBAL RESET + BASE
---------------------------------------------------------- */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-body, html {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-               Helvetica, Arial, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
   background: #f9fafb;
   color: #0b1220;
 }
@@ -24,9 +22,7 @@ body, html {
   height: 100%;
 }
 
-/* ---------------------------------------------------------
-   HEADER LAYOUT
---------------------------------------------------------- */
+/* Header layout */
 
 .app-header {
   position: absolute;
@@ -34,19 +30,16 @@ body, html {
   top: 12px;
   left: 12px;
   right: 12px;
-
+  max-width: 1200px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  max-width: 1400px;
-  margin: 0 auto;
-
-  pointer-events: none; /* lets user drag map behind header */
+  pointer-events: none;
 }
 
 .app-header * {
-  pointer-events: auto; /* re-enable pointer events inside */
+  pointer-events: auto;
 }
 
 .header-compact .left {
@@ -67,19 +60,15 @@ body, html {
   margin-top: -2px;
 }
 
-/* ---------------------------------------------------------
-   TOP SEARCH BAR (compact Where / What / When)
---------------------------------------------------------- */
+/* Top search (Where / What / When) */
 
 .top-search.compact {
   display: flex;
   gap: 8px;
   align-items: center;
-
   background: rgba(255, 255, 255, 0.92);
   padding: 6px 8px;
   border-radius: 10px;
-
   box-shadow: 0 8px 20px rgba(2, 6, 23, 0.06);
   backdrop-filter: blur(4px);
 }
@@ -95,15 +84,10 @@ body, html {
   cursor: pointer;
 }
 
-/* Placeholder-style disabled option */
 .compact-field select option[disabled] {
   color: #6b7280;
   font-weight: 700;
 }
-
-/* ---------------------------------------------------------
-   CLEAR BUTTON
---------------------------------------------------------- */
 
 .compact-actions .compact-clear {
   padding: 7px 10px;
@@ -118,89 +102,27 @@ body, html {
   background: #f3f4f6;
 }
 
-/* ---------------------------------------------------------
-   THREE-DASH MENU
---------------------------------------------------------- */
-
-.three-dash {
-  position: relative;
-}
-
-.dash-btn {
-  font-size: 20px;
-  background: white;
-  border: 1px solid #e6eefc;
-  border-radius: 8px;
-  padding: 4px 10px;
-  cursor: pointer;
-}
-
-.dash-menu {
-  display: none;
-  position: absolute;
-  top: 42px;
-  right: 0;
-
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.12);
-  min-width: 140px;
-  padding: 8px 0;
-  z-index: 2000;
-}
-
-.three-dash:hover .dash-menu {
-  display: block;
-}
-
-.dash-menu a {
-  display: block;
-  padding: 8px 14px;
-  text-decoration: none;
-  font-size: 14px;
-  color: #0b1220;
-}
-
-.dash-menu a:hover {
-  background: #f3f4f6;
-}
-
-/* ---------------------------------------------------------
-   MAP WRAPPER (basic)
---------------------------------------------------------- */
-
-.map-wrap {
-  width: 100%;
-  height: 100%;
-}
-
 .no-results {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: rgba(255, 255, 255, 0.92);
-  padding: 14px 18px;
+  padding: 10px 14px;
   border-radius: 10px;
-  font-weight: 600;
+  font-size: 14px;
   color: #374151;
-  box-shadow: 0 6px 30px rgba(2, 6, 23, 0.1);
+  box-shadow: 0 6px 24px rgba(2, 6, 23, 0.1);
 }
-
-/* ---------------------------------------------------------
-   RESPONSIVE SMALL SCREENS
---------------------------------------------------------- */
 
 @media (max-width: 768px) {
   .top-search.compact {
     gap: 6px;
     padding: 4px 6px;
   }
-
   .compact-field select {
     min-width: 100px;
   }
-
   .wordmark {
     font-size: 17px;
   }

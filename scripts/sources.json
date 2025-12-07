@@ -1,0 +1,49 @@
+{
+  "sources": [
+    {
+      "id": "visitstockholm-events",
+      "name": "Visit Stockholm Events (API)",
+      "type": "api",
+      "url": "https://www.visitstockholm.com/api/events",
+      "country": "SE",
+      "region": "Stockholm",
+      "poll_interval_minutes": 60,
+      "resultPath": "items",
+      "transform": "scripts/transforms/visitstockholm.js"
+    },
+    {
+      "id": "stockholmlive-events",
+      "name": "StockholmLive Events",
+      "type": "scrape",
+      "url": "https://stockholmlive.com/en/events/",
+      "country": "SE",
+      "region": "Stockholm",
+      "poll_interval_minutes": 180,
+      "selectors": {
+        "item": ".event-listing-item, .show-item, .card",
+        "title": "h3.event-title, .card-title",
+        "date": ".event-date, time, .date",
+        "location": ".event-venue, .venue, .place",
+        "link": "a@href"
+      },
+      "transform": "scripts/transforms/stockholmlive.js"
+    },
+    {
+      "id": "visitoslo-events",
+      "name": "VisitOslo What's On",
+      "type": "scrape",
+      "url": "https://www.visitoslo.com/en/whats-on/",
+      "country": "NO",
+      "region": "Oslo",
+      "poll_interval_minutes": 180,
+      "selectors": {
+        "item": ".event-card, .list-item, .event",
+        "title": "h3, .title, .card-title",
+        "date": ".date, time, .event-date",
+        "location": ".venue, .place, .city",
+        "link": "a@href"
+      },
+      "transform": "scripts/transforms/visitoslo.js"
+    }
+  ]
+}

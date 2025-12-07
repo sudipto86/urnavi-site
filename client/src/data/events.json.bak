@@ -1,0 +1,57 @@
+[
+  {
+    "id": "se-stockholm-market-1",
+    "title": "Old Town Winter Market",
+    "start": "2025-12-14T10:00:00+01:00",
+    "category": "Market",
+    "country": "Sweden",
+    "city": "Stockholm",
+    "lat": 59.325,
+    "lng": 18.07,
+    "url": "https://example.org/stockholm-market"
+  },
+  {
+    "id": "se-stockholm-concert-1",
+    "title": "Indie Night at Södermalm",
+    "start": "2025-12-20T20:00:00+01:00",
+    "category": "Music",
+    "country": "Sweden",
+    "city": "Stockholm",
+    "lat": 59.31,
+    "lng": 18.06,
+    "url": "https://example.org/indie-night"
+  },
+  {
+    "id": "se-gothenburg-food-1",
+    "title": "Gothenburg Street Food Fest",
+    "start": "2026-01-10T12:00:00+01:00",
+    "category": "Food",
+    "country": "Sweden",
+    "city": "Gothenburg",
+    "lat": 57.7089,
+    "lng": 11.9746,
+    "url": "https://example.org/gothenburg-food"
+  },
+  {
+    "id": "no-oslo-market-1",
+    "title": "Oslo Christmas Market",
+    "start": "2025-12-18T11:00:00+01:00",
+    "category": "Market",
+    "country": "Norway",
+    "city": "Oslo",
+    "lat": 59.9139,
+    "lng": 10.7522,
+    "url": "https://example.org/oslo-christmas-market"
+  },
+  {
+    "id": "no-oslo-concert-1",
+    "title": "Winter Jazz in Oslo",
+    "start": "2026-01-05T19:00:00+01:00",
+    "category": "Music",
+    "country": "Norway",
+    "city": "Oslo",
+    "lat": 59.92,
+    "lng": 10.75,
+    "url": "https://example.org/oslo-jazz"
+  }
+]

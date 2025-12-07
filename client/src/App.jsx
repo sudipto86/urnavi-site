@@ -1,71 +1,78 @@
-// client/src/App.jsx
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import MapView from "./components/MapView";
 import Logo from "./components/Logo";
 import events from "./data/events.json";
+//import events from './data/events-static.json';
 import "./styles/global.css";
-
-/**
- * Simple, clean header:
- * - Where (country) -> immediate apply
- * - What (category) -> immediate apply (single select)
- * - When (month) -> immediate apply (single select)
- * - Clear resets filters and triggers map reset via resetToken
- */
 
 export default function App() {
   const [filters, setFilters] = useState({
-    category: "all",    // What
-    country: "all",     // Where
-    dateFrom: ""        // When (YYYY-MM-DD month-start) or "" for all
+    country: "all",  // Where
+    category: "all", // What
+    dateFrom: ""     // When (YYYY-MM-01 or "")
   });
 
-  // token used to tell MapView to reset to world bounds when Clear pressed
   const [resetToken, setResetToken] = useState(0);
 
-  // derive options from events.json
-  const categoryOptions = useMemo(() => {
-    const s = Array.from(new Set(events.map(e => (e.category || "uncategorized").trim())));
-    s.sort();
-    return ["all", ...s];
-  }, []);
-
+  // WHERE options (countries) – derive from data but ensure Sweden/Norway visible
   const countryOptions = useMemo(() => {
-    const s = Array.from(new Set(events.map(e => (e.country || "Unknown").trim())));
-    s.sort();
-    return ["all", ...s];
+    const base = ["Sweden", "Norway"];
+    const fromData = Array.from(
+      new Set(
+        events
+          .map(e => (e.country || "").trim())
+          .filter(Boolean)
+      )
+    );
+    const merged = Array.from(new Set([...base, ...fromData])).sort();
+    return ["all", ...merged];
   }, []);
 
-  // months: next 3 months including current
+  // WHAT options (categories) – derive from data
+  const categoryOptions = useMemo(() => {
+    const cats = Array.from(
+      new Set(
+        events
+          .map(e => (e.category || "").trim())
+          .filter(Boolean)
+      )
+    ).sort();
+    return ["all", ...cats];
+  }, []);
+
+  // WHEN options – next 3 months (including current)
   const monthOptions = useMemo(() => {
     const now = new Date();
-    const months = ["all"];
+    const arr = ["all"];
     for (let i = 0; i < 3; i++) {
       const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
-      const iso = d.toISOString().slice(0,7); // YYYY-MM
-      const label = d.toLocaleString(undefined, { month: "short", year: "numeric" });
-      months.push({ value: `${iso}-01`, label });
+      const iso = d.toISOString().slice(0, 10); // YYYY-MM-DD
+      const label = d.toLocaleString(undefined, {
+        month: "short",
+        year: "numeric"
+      });
+      arr.push({ value: iso, label });
     }
-    return months;
+    return arr;
   }, []);
 
-  // handlers - immediate apply
-  function onWhereChange(value) {
-    setFilters(f => ({ ...f, country: value }));
-    // if clearing the country, trigger resetToken so MapView can reset to world bounds
-    if (!value || value === "all") setResetToken(t => t + 1);
+  function handleWhereChange(value) {
+  setFilters((f) => ({ ...f, country: value }));
+  if (!value || value === "all") {
+    setResetToken((t) => t + 1);
   }
+}
 
-  function onWhatChange(value) {
+  function handleWhatChange(value) {
     setFilters(f => ({ ...f, category: value }));
   }
 
-  function onWhenChange(value) {
-    setFilters(f => ({ ...f, dateFrom: value || "" }));
+  function handleWhenChange(value) {
+    setFilters(f => ({ ...f, dateFrom: value === "all" ? "" : value }));
   }
 
-  function onClear() {
-    setFilters({ category: "all", country: "all", dateFrom: "" });
+  function handleClear() {
+    setFilters({ country: "all", category: "all", dateFrom: "" });
     setResetToken(t => t + 1);
   }
 
@@ -81,13 +88,12 @@ export default function App() {
         </div>
 
         <div className="top-search compact" role="search" aria-label="Explore events">
-
           {/* WHERE */}
           <div className="search-field compact-field">
             <select
               aria-label="Where — Countries"
               value={filters.country}
-              onChange={e => onWhereChange(e.target.value)}
+              onChange={e => handleWhereChange(e.target.value)}
             >
               <option value="all" disabled>Where</option>
               {countryOptions.map(c => (
@@ -103,7 +109,7 @@ export default function App() {
             <select
               aria-label="What — Type"
               value={filters.category}
-              onChange={e => onWhatChange(e.target.value)}
+              onChange={e => handleWhatChange(e.target.value)}
             >
               <option value="all" disabled>What</option>
               {categoryOptions.map(cat => (
@@ -118,31 +124,28 @@ export default function App() {
           <div className="search-field compact-field">
             <select
               aria-label="When — Month"
-              value={filters.dateFrom ? filters.dateFrom : "all"}
-              onChange={e => onWhenChange(e.target.value === "all" ? "" : e.target.value)}
+              value={filters.dateFrom || "all"}
+              onChange={e => handleWhenChange(e.target.value)}
             >
               <option value="all" disabled>When</option>
               {monthOptions.map(opt =>
-                opt === "all" ? null : <option key={opt.value} value={opt.value}>{opt.label}</option>
+                opt === "all" ? null : (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                )
               )}
             </select>
           </div>
 
           <div className="search-actions compact-actions">
-            <button className="clear-btn compact-clear" onClick={onClear}>Clear</button>
+            <button className="clear-btn compact-clear" onClick={handleClear}>
+              Clear
+            </button>
           </div>
         </div>
 
-        <div className="right">
-          <div className="three-dash" title="More">
-            <button className="dash-btn" aria-label="More menu">☰</button>
-            <div className="dash-menu" role="menu">
-              <a href="#discover" onClick={e => e.preventDefault()}>Discover</a>
-              <a href="#about" onClick={e => e.preventDefault()}>About</a>
-              <a href="#contact" onClick={e => e.preventDefault()}>Contact</a>
-            </div>
-          </div>
-        </div>
+        <div className="right" />
       </header>
 
       <main>
